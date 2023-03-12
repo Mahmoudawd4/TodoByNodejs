@@ -6,12 +6,13 @@ const UserController = require('../controllers/usersController');
 const router = express.Router();
 const authMiddleware = require('../midelwares/Auth');
 const authorizeUser = require('../midelwares/authorizeUser');
+const { validate, createUserValidation } = require('../midelwares/validationUsers');
 
 // Register a new user
-router.post('/users', UserController.createUser);
+router.post('/users',validate(createUserValidation),UserController.createUser);
 
 // login
-router.post('/users/login', UserController.loginUser);
+router.post('/users/login',validate(createUserValidation), UserController.loginUser);
 
 // Get all users
 router.get('/users', authMiddleware, UserController.getAllUsers);
