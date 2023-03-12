@@ -1,0 +1,156 @@
+npm install eslint-config-airbnb
+npm init -y
+npm install express mongoose bcryptjs jsonwebtoken dotenv cors
+npm install mongoose
+----------------------------------------------------------------
+
+useNewUrlParser 
+- The underlying MongoDB driver has deprecated their current connection string parser. Because this is a major change, they added the useNewUrlParser flag to allow users to fall back to the old parser if they find a bug in the new parser. You should set useNewUrlParser: true unless that prevents you from connecting. Note that if you specify useNewUrlParser: true, you must specify a port in your connection string, like mongodb://localhost:27017/dbname. The new url parser does not support connection strings that do not have a port, like mongodb://localhost/dbname.
+useCreateIndex 
+- False by default. Set to true to make Mongoose's default index build use
+useUnifiedTopology- 
+False by default. Set to true to opt in to using the MongoDB driver's new connection management engine. You should set this option to true, except for the unlikely case that it prevents you from maintaining a stable connection.
+
+// const createTodo = async (req, res) => {
+//   try {
+//     const { userId, title, tags } = req.body;
+//     // const userId = req.user._id;
+//     // assuming user is authenticated and userId is stored in req.user
+//     const todo = new Todo({
+//       userId,
+//       title,
+//       tags,
+//     });
+//     await todo.save();
+//     res.status(201).json(todo);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
+// const createTodo = asyncWrapper(async (req, res) => {
+//   try {
+//         const { userId, title, tags } = req.body;
+//         // const userId = req.user._id;
+//         // assuming user is authenticated and userId is stored in req.user
+//         const todo = new Todo({
+//           userId,
+//           title,
+//           tags,
+//         });
+//         await todo.save();
+//         res.status(201).json(todo);
+//       } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Server error' });
+//       }
+// });
+
+
+// const getTodoById = async (req, res) => {
+//   try {
+//     const todo = await Todo.findById(req.params.id).populate('userId');
+
+//     if (!todo) {
+//       return res.status(404).json({ message: 'Todo not found' });
+//     }
+
+//     res.json(todo);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: 'Server error' });
+//   }
+// };
+
+// const getAllTodos =
+//  (data) => Todo.find(data.status).limit(+data.limit).skip(+data.skip).populate('userId');
+
+
+// const updateUserById = async (req, res) => {
+//   try {
+//     const { username, password, firstName, lastName, dob } = req.body;
+//     const user = await User.findByIdAndUpdate(
+//       req.params.id,
+//       {
+//         username,
+//         password,
+//         firstName,
+//         lastName,
+//         dob,
+//       },
+//       { new: true }
+//     );
+//     if (!user) {
+//       return res.status(404).json({ message: 'User not found' });
+//     }
+//     res.json({ message: 'User was edited successfully', user });
+//   } catch (error) {
+//     res.status(500).json({ message: 'Something went wrong' });
+//   }
+// };
+
+// Middleware for validation
+// const validateUpdateUser = [
+//   body('username')
+//     .trim()
+//     .isLength({ min: 8 })
+//     .withMessage('Username must be at least 8 characters')
+//     .custom(async (value, { req }) => {
+//       const user = await User.findOne({ username: value });
+//       if (user && user._id != req.params.id) {
+//         return Promise.reject('Username already in use');
+//       }
+//     }),
+//   body('password')
+//     .trim()
+//     .isLength({ min: 8 })
+//     .withMessage('Password must be at least 8 characters'),
+//   body('firstName')
+//     .trim()
+//     .isLength({ min: 3, max: 15 })
+//     .withMessage('First name must be between 3 and 15 characters'),
+//   body('lastName')
+//     .trim()
+//     .isLength({ min: 3, max: 15 })
+//     .withMessage('Last name must be between 3 and 15 characters'),
+//   body('dob').optional().isISO8601().toDate(),
+//   (req, res, next) => {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       return res.status(400).json({ errors: errors.array() });
+//     }
+//     next();
+//   },
+// ];
+
+
+  // Define validation rules for the fields
+  // const rules = [
+  //   check('username')
+  //     .trim()
+  //     .isLength({ min: 8 })
+  //     .withMessage('Username must be at least 8 characters')
+  //     .isAlphanumeric()
+  //     .withMessage('Username can only contain letters and numbers')
+  //     .custom(async (value) => {
+  //       // Check if username is already taken
+  //       const user = await User.findOne({ username: value });
+  //       if (user) {
+  //         return Promise.reject('Username is already taken');
+  //       }
+  //     }),
+  //   check('password')
+  //     .trim()
+  //     .isLength({ min: 6 })
+  //     .withMessage('Password must be at least 6 characters'),
+  //   check('firstName')
+  //     .trim()
+  //     .isLength({ min: 3, max: 15 })
+  //     .withMessage('First name must be between 3 and 15 characters'),
+  //   check('lastName')
+  //     .trim()
+  //     .isLength({ min: 3, max: 15 })
+  //     .withMessage('Last name must be between 3 and 15 characters'),
+  // ];
+
